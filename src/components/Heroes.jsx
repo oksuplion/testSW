@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container, Box, Typography, styled } from "@mui/material";
+import {Container, Box, Typography, styled, useTheme} from "@mui/material";
 import { getCharacters } from '../services/SWServices';
+import {colorDefinitions} from "../theme";
 
 const Heroes = () => {
    const [chars, setChars] = useState([]);
+   const theme = useTheme();
+   const colors = colorDefinitions(theme.palette.mode);
 
    useEffect(() => {
       const fetchChars = async () => {
@@ -38,19 +41,19 @@ const Heroes = () => {
                You don't know about it:
             </Typography>
          </TextBox>
-         {chars.map(char =>
+         {chars.slice(0, 5).map(char =>
             <HeroBox>
                <Typography
                   key={char.name}
                   fontSize="20px"
                   marginBottom="10px"
-                  color={"text.secondary"}>
+                  color={colors.primary.DEFAULT}>
                   {char.name}
                </Typography >
                <Box>
-                  <Typography fontSize="14px">Height: {char.height}</Typography >
-                  <Typography fontSize="14px">Mass: {char.mass}</Typography >
-                  <Typography fontSize="14px">Birth year: {char.birth_year}</Typography >
+                  <Typography color={colors.black.DEFAULT} fontSize="14px">Height: {char.height}</Typography >
+                  <Typography color={colors.black.DEFAULT} fontSize="14px">Mass: {char.mass}</Typography >
+                  <Typography color={colors.black.DEFAULT} fontSize="14px">Birth year: {char.birth_year}</Typography >
                </Box>
             </HeroBox>
          )}

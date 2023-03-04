@@ -18,26 +18,26 @@ import {
    FormGroup,
    FormControlLabel,
    Switch,
-   styled,
+   styled, useTheme,
+   Hidden
 } from "@mui/material";
-import { ColorModeContext } from '../App';
+import {ColorModeContext, colorDefinitions} from '../theme';
+import ThemeSwitcher from "./shared/ThemeSwitcher";
 import logo from "../media/ic-logo.png";
 
 export const Navbar = () => {
-   const [checkedTheme, setCheckedTheme] = useState(false);
+   // const [checkedTheme, setCheckedTheme] = useState(false);
    const [mobileMenu, setMobileMenu] = useState({
       left: false,
    });
-   const colorMode = React.useContext(ColorModeContext);
+   const theme = useTheme();
+   const mode = theme.palette.mode;
+   const colors = colorDefinitions(mode)
 
    const toggleDrawer = (anchor, open) => (event) => {
       setMobileMenu({ ...mobileMenu, [anchor]: open });
    };
 
-   const handleChange = () => {
-      colorMode.toggleColorMode();
-      setCheckedTheme(checkedTheme => !checkedTheme)
-   }
 
    const list = (anchor) => (
       <Box
@@ -62,6 +62,7 @@ export const Navbar = () => {
                )
             )}
          </List>
+         <ThemeSwitcher />
       </Box>
    );
 
@@ -125,17 +126,18 @@ export const Navbar = () => {
             </Box>
 
             <NavbarLinksBox>
-               <NavLink variant="body2">Home</NavLink>
-               <NavLink variant="body2">Features</NavLink>
-               <NavLink variant="body2">Listed</NavLink>
-               <NavLink variant="body2">Contact</NavLink>
+               <NavLink variant="body2" color={colors.black.DEFAULT}>Home</NavLink>
+               <NavLink variant="body2" color={colors.black.DEFAULT}>Features</NavLink>
+               <NavLink variant="body2" color={colors.black.DEFAULT}>Listed</NavLink>
+               <NavLink variant="body2" color={colors.black.DEFAULT}>Contact</NavLink>
             </NavbarLinksBox>
          </Box>
-         <FormGroup>
-            <FormControlLabel control={<Switch onChange={handleChange} checked={checkedTheme} />} label="Switch Theme" />
-         </FormGroup>
+         <Hidden mdDown>
+            <ThemeSwitcher />
+         </Hidden>
       </NavbarContainer >
    );
 };
 
 export default Navbar;
+

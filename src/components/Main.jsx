@@ -1,10 +1,9 @@
 import { Box, Button, styled, Typography, useTheme } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Heroes from "./Heroes";
-
+import { colorDefinitions } from "../theme";
 
 import mainImg from "../media/main.png";
 
@@ -29,6 +28,7 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const Main = () => {
    const theme = useTheme();
+   const colors = colorDefinitions(theme.palette.mode)
 
    return (
       <WrapperContainer>
@@ -36,12 +36,12 @@ const Main = () => {
 
          <CustomBox>
             <Box flex="1">
-               <Typography color="primary"
+               <Typography color={colors.black.DEFAULT}
                   fontSize="18px"
                   fontWeight="500"
                > Welcome to the Star Wars Fun Page
                </Typography>
-               <Title variant="h1" color="primary">
+               <Title variant="h1" color={colors.black.DEFAULT}>
                   Find more about your favorite Heros
                </Title>
                <Button variant="outlined" color="primary">More about us</Button>
@@ -61,5 +61,5 @@ const Main = () => {
 export default Main;
 
 const WrapperContainer = styled(Container)(({ theme }) => ({
-   backgroundColor: console.log(theme.palette.mode) || theme.palette[theme.palette.mode]
+   backgroundColor: theme.palette.neutral[theme.palette.mode]
 }));
